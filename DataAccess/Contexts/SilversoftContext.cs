@@ -1,11 +1,19 @@
 ﻿using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace DataAccess.Contexts;
 
-public class SilversoftContext(DbContextOptions<SilversoftContext> options) : DbContext(options)
+public class SilversoftContext : DbContext
 {
+    public SilversoftContext(DbContextOptions options) : base(options)
+    {
+    }
+
+    public SilversoftContext()
+    {
+        
+    }
+
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Challenge> Challenges { get; set; }
     public DbSet<Event> Events { get; set; }
