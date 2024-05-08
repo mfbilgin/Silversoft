@@ -1,4 +1,6 @@
-﻿using DataAccess.Contexts;
+﻿using DataAccess.Abstracts;
+using DataAccess.Concretes.EntityFramework;
+using DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,5 +15,6 @@ public static class DataAccessServiceRegistration
         {
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         });
+        services.AddSingleton<IRoleRepository,EfRoleRepository>();
     }
 }
