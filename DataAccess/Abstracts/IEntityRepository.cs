@@ -10,5 +10,6 @@ public interface IEntityRepository<T> where T : class, IEntity, new()
     void Update(T entity);
     void Delete(T entity);
     T? Get(Expression<Func<T, bool>> filter);
-    PageableModel<T> GetList(Expression<Func<T, bool>>? filter = null, int index = 1, int size = 10);
+    T? GetById(Guid id);
+    PageableModel<T> GetList(int index, int size, Expression<Func<T, bool>>? filter = null);
 }
