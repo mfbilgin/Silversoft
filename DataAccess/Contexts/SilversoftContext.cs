@@ -1,17 +1,18 @@
 ﻿using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace DataAccess.Contexts;
 
-public class SilversoftContext : DbContext
+public class SilversoftContext(IConfiguration configuration) : DbContext
 {
-    public SilversoftContext(DbContextOptions options) : base(options)
-    {
-    }
+    private readonly IConfiguration? _configuration = configuration;
 
-    public SilversoftContext()
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        
+        if (_configuration == null) return;
+        var connectionString = _configuration.GetConnectionString("DefaultConnection");
+        optionsBuilder.UseSqlServer(connectionString);
     }
 
     public DbSet<Blog> Blogs { get; set; }
