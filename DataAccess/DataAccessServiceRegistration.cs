@@ -2,19 +2,17 @@
 using DataAccess.Concretes.EntityFramework;
 using DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DataAccess;
 
 public static class DataAccessServiceRegistration
 {
-    public static void AddDataAccessServices(this IServiceCollection services, IConfiguration configuration)
+    public static void AddDataAccessServices(this IServiceCollection services)
     {
-        services.AddDbContext<SilversoftContext>(options =>
-        {
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-        });
-        services.AddSingleton<IRoleRepository,EfRoleRepository>();
+        
+        services.AddSingleton<IRoleRepository,EfRoleRepository>(); 
+        services.AddSingleton<DbContext,SilversoftContext>();
+
     }
 }
