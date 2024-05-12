@@ -1,7 +1,16 @@
 ﻿using DataAccess.Abstracts;
+using DataAccess.Abstracts.EntityFramework;
 using DataAccess.Contexts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concretes.EntityFramework;
 
-public class EfRoleRepository : EfEntityRepository<Role,SilversoftContext> ,IRoleRepository;
+public class EfRoleRepository(DbContext context) : EfEntityRepository<Role>(context),IRoleRepository
+{
+    public Role? GetByName(string name)
+    {
+        return Get(role => role.Name == name);
+    }
+    
+}
