@@ -1,6 +1,8 @@
-﻿namespace Business.Abstracts;
+﻿using Entities.Concretes;
 
-public interface IRoleService
+namespace Business.Abstracts;
+
+public interface IRoleService : IEntityService<Role>
 {
-    
+    Role? GetByName(string name);
 }
