@@ -3,8 +3,8 @@ using Autofac.Extensions.DependencyInjection;
 using Business;
 using Business.DependencyResolvers;
 using Core;
-using Core.CrossCuttingConcerns.Exceptions;
 using Core.DependencyResolvers;
+using Core.Extensions.Exception;
 using DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +22,7 @@ builder.Services.AddBusinessServices();
 builder.Services.AddCoreServices(new CoreModule());
 
 var app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
