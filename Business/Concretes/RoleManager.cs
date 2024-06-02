@@ -43,7 +43,7 @@ public class RoleManager(IRoleRepository roleRepository, IMapper mapper,RoleBusi
 
     public RoleGetDto? GetById(Guid id)
     {
-        var role = roleRepository.Get(role => role.Id == id);
+        var role = roleRepository.GetById(id);
         return mapper.Map<RoleGetDto>(role);
     }
     
