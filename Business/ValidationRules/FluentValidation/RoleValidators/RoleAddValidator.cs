@@ -1,11 +1,11 @@
-﻿using Entities.Concretes;
+﻿using Dtos.Role;
 using FluentValidation;
 
-namespace Business.ValidationRules.FluentValidation;
+namespace Business.ValidationRules.FluentValidation.RoleValidators;
 
-public class RoleValidator : AbstractValidator<Role>
+public class RoleAddValidator : AbstractValidator<RoleAddDto>
 {
-    public RoleValidator()
+    public RoleAddValidator()
     {
         RuleFor(x => x.Name).NotEmpty().WithMessage("Role name cannot be empty.");
         RuleFor(x => x.Name).NotNull().WithMessage("Role name cannot be null.");
