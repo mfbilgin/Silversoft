@@ -13,7 +13,7 @@ public class SilversoftContext(IConfiguration configuration) : DbContext
         if (_configuration == null) return;
         var connectionString = _configuration.GetConnectionString("DefaultConnection");
         optionsBuilder.UseSqlServer(connectionString);
-    }
+    }   
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Challenge> Challenges { get; set; }
