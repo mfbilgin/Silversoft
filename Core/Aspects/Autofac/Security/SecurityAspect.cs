@@ -1,5 +1,5 @@
 ﻿using Castle.DynamicProxy;
-using Core.CrossCuttingConcerns.Exceptions;
+using Core.Exceptions;
 using Core.Extensions.Claim;
 using Core.Interceptors;
 using Core.IoC;
