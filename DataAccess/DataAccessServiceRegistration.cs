@@ -12,6 +12,7 @@ public static class DataAccessServiceRegistration
     {
         
         services.AddSingleton<IRoleRepository,EfRoleRepository>(); 
+        services.AddSingleton<IUserRepository,EfUserRepository>(); 
         services.AddSingleton<DbContext,SilversoftContext>();
 
     }
