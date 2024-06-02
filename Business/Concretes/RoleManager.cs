@@ -1,48 +1,61 @@
-﻿using Business.Abstracts;
+﻿using AutoMapper;
+using Business.Abstracts;
 using Business.BusinessRules;
-using Business.ValidationRules.FluentValidation;
-using Core.Aspects.Autofac.Security;
+using Business.ValidationRules.FluentValidation.RoleValidators;
+//using Core.Aspects.Autofac.Security;
 using Core.Aspects.Autofac.Validation;
 using Core.Extensions.Paging;
 using DataAccess.Abstracts;
+using Dtos.Role;
 using Entities.Concretes;
 
 namespace Business.Concretes;
 
 //[SecurityAspect("admin")]
-public class RoleManager(IRoleRepository roleRepository) : IRoleService
+public class RoleManager(IRoleRepository roleRepository, IMapper mapper,RoleBusinessRules roleBusinessRules) : IRoleService
 {
-    private readonly RoleBusinessRules _roleBusinessRules = new(roleRepository);
-
-    [ValidationAspect(typeof(RoleValidator))]
-    public void Add(Role role)
+    [ValidationAspect(typeof(RoleAddValidator))]
+    public void Add(RoleAddDto roleAddDto)
     {
-        _roleBusinessRules.RoleNameCanNotBeDuplicated(role.Name);
+        roleBusinessRules.RoleNameCanNotBeDuplicated(roleAddDto.Name);
+        var role = mapper.Map<Role>(roleAddDto);
+        role.Id = Guid.NewGuid();
         roleRepository.Add(role);
     }
-    
-    [ValidationAspect(typeof(RoleValidator))]
-    public void Update(Role role)
+
+    [ValidationAspect(typeof(RoleUpdateValidator))]
+    public void Update(RoleUpdateDto roleUpdateDto)
     {
-        _roleBusinessRules.RoleNameCanNotBeDuplicated(role.Name);
+        roleBusinessRules.RoleIdMustBeExist(roleUpdateDto.Id);
+        roleBusinessRules.RoleNameCanNotBeDuplicated(roleUpdateDto.Name);
+
+        var role = mapper.Map<Role>(roleUpdateDto);
         roleRepository.Update(role);
     }
-
-    public void Delete(Role role)
+    
+    public void Delete(RoleDeleteDto roleDeleteDto)
     {
-        _roleBusinessRules.RoleIdCanBeExist(role.Id);
+        roleBusinessRules.RoleIdMustBeExist(roleDeleteDto.Id);
+        var role = mapper.Map<Role>(roleDeleteDto);
+
         roleRepository.Delete(role);
     }
-    public Role? GetById(Guid id)
+
+    public RoleGetDto? GetById(Guid id)
     {
-        return roleRepository.GetById(id);
+        var role = roleRepository.Get(role => role.Id == id);
+        return mapper.Map<RoleGetDto>(role);
     }
-    public PageableModel<Role> GetAll(int index = 1, int size = 10)
+    
+    public RoleGetDto? GetByName(string name)
     {
-        return roleRepository.GetList(index, size);
+        var role = roleRepository.GetByName(name);
+        return mapper.Map<RoleGetDto>(role);
     }
-    public Role? GetByName(string name)
+
+    public PageableModel<RoleGetDto> GetAll(int index = 1, int size = 10)
     {
-        return roleRepository.GetByName(name);
+        var roles = roleRepository.GetList(index, size);
+        return mapper.Map<PageableModel<RoleGetDto>>(roles);
     }
 }
