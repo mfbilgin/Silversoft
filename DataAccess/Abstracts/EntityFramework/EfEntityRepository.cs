@@ -6,45 +6,40 @@ using Microsoft.EntityFrameworkCore;
 namespace DataAccess.Abstracts.EntityFramework;
 
 public abstract class EfEntityRepository<T>(DbContext context) : IEntityRepository<T>
-    where T : class, IEntity, new()
-{
-    private readonly DbSet<T> _entities = context.Set<T>();
-    public void Add(T entity)
+    where T : class, IEntity
+{ public void Add(T entity)
     {
-        var addedEntity = context.Entry(entity);
-        addedEntity.State = EntityState.Added;
+        context.Set<T>().Add(entity);
         context.SaveChanges();
     }
 
     public void Update(T entity)
     {
-        var updatedEntity = context.Entry(entity);
-        updatedEntity.State = EntityState.Modified;
+        context.Set<T>().Update(entity);
         context.SaveChanges();
     }
 
     public void Delete(T entity)
     {
-        var deletedEntity = context.Entry(entity);
-        deletedEntity.State = EntityState.Deleted;
+        context.Set<T>().Remove(entity);
         context.SaveChanges();
     }
 
     public T? Get(Expression<Func<T, bool>> filter)
     {
-        return _entities.SingleOrDefault(filter);
+        return context.Set<T>().AsNoTracking().SingleOrDefault(filter);
     }
 
     public T? GetById(Guid id)
     {
-        return _entities.Find(id);
+        return context.Set<T>().Find(id);
     }
 
     public PageableModel<T> GetList(int index, int size, Expression<Func<T, bool>>? filter = null)
     {
         var queryable = filter is null
-            ? _entities
-            : _entities.Where(filter);
+            ? context.Set<T>().AsNoTracking()
+            : context.Set<T>().AsNoTracking().Where(filter);
         return queryable.ToPaginate(index, size);
     }
 }
