@@ -9,7 +9,7 @@ public class EfRoleRepository(DbContext context) : EfEntityRepository<Role>(cont
 {
     public Role? GetByName(string name)
     {
-        return Get(role => role.Name == name);
+        return Get(role => role.Name.ToLower() == name.ToLower());
     }
     
 }

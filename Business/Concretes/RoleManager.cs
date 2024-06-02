@@ -18,8 +18,10 @@ public class RoleManager(IRoleRepository roleRepository, IMapper mapper,RoleBusi
     public void Add(RoleAddDto roleAddDto)
     {
         roleBusinessRules.RoleNameCanNotBeDuplicated(roleAddDto.Name);
+        
         var role = mapper.Map<Role>(roleAddDto);
         role.Id = Guid.NewGuid();
+        role.Name = role.Name.ToLower();
         roleRepository.Add(role);
     }
 
@@ -30,6 +32,7 @@ public class RoleManager(IRoleRepository roleRepository, IMapper mapper,RoleBusi
         roleBusinessRules.RoleNameCanNotBeDuplicated(roleUpdateDto.Name);
 
         var role = mapper.Map<Role>(roleUpdateDto);
+        role.Name = role.Name.ToLower();
         roleRepository.Update(role);
     }
     
