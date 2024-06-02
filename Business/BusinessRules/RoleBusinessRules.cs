@@ -1,5 +1,7 @@
 ﻿using Business.Constants;
+using Core.Exceptions;
 using DataAccess.Abstracts;
+using Microsoft.AspNetCore.Http;
 
 namespace Business.BusinessRules;
 
@@ -10,15 +12,15 @@ public class RoleBusinessRules(IRoleRepository roleRepository)
         var role = roleRepository.GetByName(name);
         if (role is not null)
         {
-            throw new Exception(RoleMessages.RoleNameAlreadyExists);
+            throw new BusinessException(RoleMessages.RoleNameAlreadyExists,StatusCodes.Status409Conflict);
         }
     }
-    public void RoleIdCanBeExist(Guid id)
+    public void RoleIdMustBeExist(Guid id)
     {
-        var role = roleRepository.GetById(id);
+        var role = roleRepository.Get(role => role.Id == id);
         if (role is null)
         {
-            throw new Exception(RoleMessages.RoleNotFound);
+            throw new BusinessException(RoleMessages.RoleNotFound,StatusCodes.Status404NotFound);
         }
     }
 }
