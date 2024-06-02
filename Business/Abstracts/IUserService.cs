@@ -10,7 +10,7 @@ public interface IUserService
     public void Delete(UserDeleteDto userDeleteDto);
     public void ChangePassword(ChangePasswordDto changePasswordDto);
     public void ChangeUserRole(ChangeUserRoleDto changeUserRoleDto);
-    public UserGetDto? GetById(Guid id);
     public PageableModel<UserGetDto> GetAll(int index = 1, int size = 10);
+    public UserGetDto? GetById(Guid id);
     UserGetDto? GetByUsername(string name);
 }
