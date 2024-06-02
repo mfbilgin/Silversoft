@@ -2,8 +2,6 @@
 using Business.Abstracts;
 using Business.BusinessRules;
 using Business.Concretes;
-using DataAccess.Abstracts;
-using DataAccess.Concretes.EntityFramework;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Business;
@@ -14,7 +12,8 @@ public static class BusinessServiceRegistration
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddSingleton<IRoleService, RoleManager>();
-        services.AddSingleton<IRoleRepository, EfRoleRepository>();
+        services.AddSingleton<IUserService, UserManager>();
         services.AddSingleton<RoleBusinessRules>();
+        services.AddSingleton<UserBusinessRules>();
     }
 }
