@@ -1,11 +1,12 @@
 ﻿using Core.Extensions.Paging;
 using Dtos.User;
+using Entities.Concretes;
 
 namespace Business.Abstracts;
 
 public interface IUserService
 {
-    public void Add(UserAddDto userAddDto);
+    public void Add(User user);
     public void Update(UserUpdateDto userUpdateDto);
     public void Delete(UserDeleteDto userDeleteDto);
     public void ChangePassword(ChangePasswordDto changePasswordDto);
