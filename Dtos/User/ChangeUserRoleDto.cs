@@ -1,6 +1,6 @@
 ﻿namespace Dtos.User;
 
-public class UserRoleUpdateDto
+public class ChangeUserRoleDto
 {
     public Guid Id { get; set; }
     public Guid RoleId { get; set; }
