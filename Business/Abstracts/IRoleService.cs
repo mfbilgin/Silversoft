@@ -1,8 +1,14 @@
-﻿using Entities.Concretes;
+﻿using Core.Extensions.Paging;
+using Dtos.Role;
 
 namespace Business.Abstracts;
 
-public interface IRoleService : IEntityService<Role>
+public interface IRoleService
 {
-    Role? GetByName(string name);
+    public void Add(RoleAddDto roleAddDto);
+    public void Update(RoleUpdateDto roleUpdateDto);
+    public void Delete(RoleDeleteDto roleDeleteDto);
+    public RoleGetDto? GetById(Guid id);
+    public PageableModel<RoleGetDto> GetAll(int index = 1, int size = 10);
+    RoleGetDto? GetByName(string name);
 }
