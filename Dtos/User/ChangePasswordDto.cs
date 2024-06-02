@@ -1,6 +1,6 @@
 ﻿namespace Dtos.User;
 
-public class ChangeUserPasswordDto
+public class ChangePasswordDto
 {
     public Guid Id { get; set; }
     public string CurrentPassword { get; set; } = string.Empty;
