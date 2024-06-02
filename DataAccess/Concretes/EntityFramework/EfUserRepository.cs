@@ -7,5 +7,8 @@ namespace DataAccess.Concretes.EntityFramework;
 
 public class EfUserRepository(DbContext context) : EfEntityRepository<User>(context), IUserRepository
 {
-    
+    public User? GetByUsername(string username)
+    {
+        return Get(user => user.Username == username);
+    }
 }
