@@ -4,7 +4,7 @@ using Entities.Abstracts;
 
 namespace DataAccess.Abstracts;
 
-public interface IEntityRepository<T> where T : class, IEntity, new()
+public interface IEntityRepository<T> where T : class, IEntity
 {
     void Add(T entity);
     void Update(T entity);
