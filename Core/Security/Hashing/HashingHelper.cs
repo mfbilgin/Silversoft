@@ -1,4 +1,4 @@
-﻿namespace Core.Security.Helpers;
+﻿namespace Core.Security.Hashing;
 
 public abstract class HashingHelper
 {
