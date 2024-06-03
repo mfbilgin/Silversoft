@@ -1,5 +1,7 @@
 ﻿using Business.Abstracts;
+using Business.Constants;
 using Dtos.Role;
+using Entities.Concretes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -9,7 +11,7 @@ namespace WebAPI.Controllers;
 public class RolesController(IRoleService roleService) : ControllerBase
 {
     [HttpGet]
-    public IActionResult GetAll(int index = 1, int size = 10)
+    public IActionResult GetAll([FromQuery] int index = 1, [FromQuery] int size = 10)
     {
         var roles = roleService.GetAll(index, size);
         return Ok(roles);
@@ -21,7 +23,7 @@ public class RolesController(IRoleService roleService) : ControllerBase
         var role = roleService.GetById(id);
         if (role == null)
         {
-            return NotFound("The role is not found.");
+            return NotFound(RoleMessages.RoleNotFound);
         }
 
         return Ok(role);
@@ -33,7 +35,7 @@ public class RolesController(IRoleService roleService) : ControllerBase
         var role = roleService.GetByName(name);
         if (role == null)
         {
-            return NotFound("The role is not found.");
+            return NotFound(RoleMessages.RoleNotFound);
         }
 
         return Ok(role);
@@ -43,20 +45,20 @@ public class RolesController(IRoleService roleService) : ControllerBase
     public IActionResult Add([FromBody] RoleAddDto roleAddDto)
     {
         roleService.Add(roleAddDto);
-        return Created("", "The role has been added.");
+        return Created("", RoleMessages.RoleHasBeenAdded);
     }
 
     [HttpPut]
     public IActionResult Update([FromBody] RoleUpdateDto roleUpdateDto)
     {
         roleService.Update(roleUpdateDto);
-        return Ok("The role has been updated.");
+        return Ok(RoleMessages.RoleHasBeenUpdated);
     }
 
     [HttpDelete]
     public IActionResult Delete([FromBody] RoleDeleteDto roleDeleteDto)
     {
         roleService.Delete(roleDeleteDto);
-        return Ok("The role has been deleted.");
+        return Ok(RoleMessages.RoleHasBeenDeleted);
     }
 }
