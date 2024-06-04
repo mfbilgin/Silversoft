@@ -6,3 +6,4 @@ riderModule.iml
 /WebAPI/appsettings.json
 /WebAPI/appsettings.Development.json
 /WebAPI/Properties/launchSettings.json
+/Core/Mailing/MailSettings.cs
