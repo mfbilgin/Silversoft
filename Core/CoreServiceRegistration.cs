@@ -1,6 +1,7 @@
 ﻿using Core.IoC;
+using Core.Mailing;
+using Core.Security.Authorization;
 using Microsoft.Extensions.DependencyInjection;
-
 namespace Core;
 
 public static class CoreServiceRegistration
@@ -11,6 +12,9 @@ public static class CoreServiceRegistration
         {
             coreModule.Load(services);
         }
+
+        services.AddSingleton<IMailService, MailKitMailManager>();
+        services.AddSingleton<ITokenHelper,JwtHelper>();
         
         ServiceTool.Create(services);
     }

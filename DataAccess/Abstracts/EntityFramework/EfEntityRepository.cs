@@ -32,7 +32,7 @@ public abstract class EfEntityRepository<T>(DbContext context) : IEntityReposito
 
     public T? GetById(Guid id)
     {
-        return context.Set<T>().Find(id);
+        return context.Set<T>().AsNoTracking().SingleOrDefault(t => t.Id == id);
     }
 
     public PageableModel<T> GetList(int index, int size, Expression<Func<T, bool>>? filter = null)

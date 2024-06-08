@@ -9,5 +9,4 @@ public sealed class Hint : IEntity
     public string Content { get; set; } = string.Empty;
     public int Price { get; set; }
     
-    public Question Question { get; set; } = new();
 }

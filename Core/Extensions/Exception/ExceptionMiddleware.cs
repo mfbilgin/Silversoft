@@ -46,9 +46,6 @@ public class ExceptionMiddleware
             },
             AuthorizationException _ => new AuthorizationErrorDetails(),
             _ => new DefaultErrorDetails()
-            {
-                Message = exception.Message
-            }
         };
 
         httpContext.Response.StatusCode = errorDetails.StatusCode;

@@ -11,7 +11,8 @@ public interface IUserService
     public void Delete(UserDeleteDto userDeleteDto);
     public void ChangePassword(ChangePasswordDto changePasswordDto);
     public void ChangeUserRole(ChangeUserRoleDto changeUserRoleDto);
+    public void VerifyEmail(string username);
     public PageableModel<UserGetDto> GetAll(int index = 1, int size = 10);
     public UserGetDto? GetById(Guid id);
-    UserGetDto? GetByUsername(string name);
+    public UserGetDto? GetByUsername(string name);
 }

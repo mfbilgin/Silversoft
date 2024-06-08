@@ -1,28 +1,19 @@
 ﻿using Castle.DynamicProxy;
 using Core.Exceptions;
-using Core.Extensions.Claim;
 using Core.Interceptors;
-using Core.IoC;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
+using Core.Security.Authorization;
 
 namespace Core.Aspects.Autofac.Security;
 
 public class SecurityAspect(string roles) : MethodInterception
 {
     private readonly string[] _roles = roles.Split(',');
-
-    private readonly IHttpContextAccessor? _httpContextAccessor =
-        ServiceTool.ServiceProvider?.GetService<IHttpContextAccessor>();
-
+    
     protected override void OnBefore(IInvocation invocation)
     {
-        if (_httpContextAccessor == null)
-        {
-            throw new NullReferenceException("HttpContextAccessor is null.");
-        }
-
-        var roleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles();
+        
+        var roleClaims = JwtHelper.GetAuthenticatedUserRoles();
+        if (_roles[0] == "all" && roleClaims.Count != 0) return;
         if (_roles.Any(role => roleClaims.Contains(role)))
         {
             return;

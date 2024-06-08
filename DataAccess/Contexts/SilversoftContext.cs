@@ -17,6 +17,7 @@ public class SilversoftContext(IConfiguration configuration) : DbContext
 
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Challenge> Challenges { get; set; }
+    public DbSet<EmailVerification> EmailVerifications { get; set; }
     public DbSet<Event> Events { get; set; }
     public DbSet<Hint> Hints { get; set; }
     public DbSet<Prize> Prizes { get; set; }

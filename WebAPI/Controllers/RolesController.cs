@@ -8,6 +8,7 @@ namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+
 public class RolesController(IRoleService roleService) : ControllerBase
 {
     [HttpGet]
@@ -16,18 +17,7 @@ public class RolesController(IRoleService roleService) : ControllerBase
         var roles = roleService.GetAll(index, size);
         return Ok(roles);
     }
-
-    [HttpGet("id/{id}")]
-    public IActionResult GetById(Guid id)
-    {
-        var role = roleService.GetById(id);
-        if (role == null)
-        {
-            return NotFound(RoleMessages.RoleNotFound);
-        }
-
-        return Ok(role);
-    }
+    
 
     [HttpGet("name/{name}")]
     public IActionResult GetByName(string name)

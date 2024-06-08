@@ -8,6 +8,4 @@ public class QuestionSolver
     public DateTime SolutionDate { get; set; }
     public bool IsFirst { get; set; }
 
-    public User User { get; set; } = new();
-    public Question Question { get; set; } = new();
 }

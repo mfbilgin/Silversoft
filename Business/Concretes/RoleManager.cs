@@ -2,7 +2,7 @@
 using Business.Abstracts;
 using Business.BusinessRules;
 using Business.ValidationRules.FluentValidation.RoleValidators;
-//using Core.Aspects.Autofac.Security;
+using Core.Aspects.Autofac.Security;
 using Core.Aspects.Autofac.Validation;
 using Core.Extensions.Paging;
 using DataAccess.Abstracts;
@@ -11,9 +11,9 @@ using Entities.Concretes;
 
 namespace Business.Concretes;
 
-//[SecurityAspect("admin")]
 public class RoleManager(IRoleRepository roleRepository, IMapper mapper,RoleBusinessRules roleBusinessRules) : IRoleService
 {
+    [SecurityAspect("admin")]
     [ValidationAspect(typeof(RoleAddValidator))]
     public void Add(RoleAddDto roleAddDto)
     {
@@ -24,7 +24,8 @@ public class RoleManager(IRoleRepository roleRepository, IMapper mapper,RoleBusi
         role.Name = role.Name.ToLower();
         roleRepository.Add(role);
     }
-
+    
+    [SecurityAspect("admin")]
     [ValidationAspect(typeof(RoleUpdateValidator))]
     public void Update(RoleUpdateDto roleUpdateDto)
     {
@@ -36,6 +37,7 @@ public class RoleManager(IRoleRepository roleRepository, IMapper mapper,RoleBusi
         roleRepository.Update(role);
     }
     
+    [SecurityAspect("admin")]
     public void Delete(RoleDeleteDto roleDeleteDto)
     {
         roleBusinessRules.RoleIdMustBeExist(roleDeleteDto.Id);
@@ -50,12 +52,14 @@ public class RoleManager(IRoleRepository roleRepository, IMapper mapper,RoleBusi
         return mapper.Map<RoleGetDto>(role);
     }
     
+    [SecurityAspect("admin")]
     public RoleGetDto? GetByName(string name)
     {
         var role = roleRepository.GetByName(name);
         return mapper.Map<RoleGetDto>(role);
     }
 
+    [SecurityAspect("admin")]
     public PageableModel<RoleGetDto> GetAll(int index = 1, int size = 10)
     {
         var roles = roleRepository.GetList(index, size);
